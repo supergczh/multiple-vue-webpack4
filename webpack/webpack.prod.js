@@ -8,7 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CompressionPlugin = require('compression-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;//一个打包模块可视化工具
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;//一个打包模块可视化工具
 
 const pro = merge(common, {
   mode: 'production',
@@ -73,9 +73,17 @@ const pro = merge(common, {
 },
   optimization: {
     
-    // splitChunks: {
-    //  chunks: 'all'
-    //  },
+    splitChunks: {
+      cacheGroups: {
+          vendor: {   // 抽离第三方插件
+              test: /node_modules/,   // 指定是node_modules下的第三方包
+              chunks: 'initial',
+              name: 'vendor',  // 打包后的文件名，任意命名    
+              // 设置优先级，防止和自定义的公共代码提取时被覆盖，不进行打包
+              priority: 10    
+          }
+      }
+    },
     //  runtimeChunk: true,
      minimizer: [
        new TerserPlugin({
@@ -106,7 +114,7 @@ const pro = merge(common, {
          }
      }),
        new OptimizeCSSAssetsPlugin({}),
-    
+      //  new BundleAnalyzerPlugin()
      ]
    },
    mode: 'production'

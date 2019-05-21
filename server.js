@@ -6,7 +6,7 @@ const webpack = require("webpack");		// webpack核心
 // const env = process.env.NODE_ENV;      
 const env = process.env.npm_lifecycle_event;       //
 const app = express();                      // 实例化express服务
-const PORT = 9008;                          // 服务启动端口号
+const PORT = 9013;                          // 服务启动端口号
 
 if (env === 'build:test') {                 // 生产环境，则运行build文件夹中的代码
     app.use(express.static('dist'));

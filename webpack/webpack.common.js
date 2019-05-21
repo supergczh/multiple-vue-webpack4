@@ -18,8 +18,7 @@ function getEntry(globPath) {
   return Entrys;
 }
 
-
-var Entrys = getEntry('./src/**/main.js'); // 获得入口 js 文件
+var Entrys= getEntry('./src/**/main.js'); // 获得入口 js 文件
 var pages = getEntry('./src/**/*.html');// 获得入口 html文件
 var chunks = Object.keys(Entrys);
 
@@ -33,7 +32,7 @@ const Output=process.env.NODE_ENV=='production'?{
   path: path.resolve(__dirname, '..', 'dist'),
   filename:'js/[name]-[chunkhash:8].chunk.js',
   chunkFilename: "js/[name].[chunkhash:8].chunk.js",
-  publicPath: '../'
+  publicPath: '../',
 }:{
   path: path.resolve(__dirname, '..', 'dist'),
   filename:'js/[name].bundle.js',
@@ -89,10 +88,11 @@ module.exports ={
         minify: {
           removeComments: true,
           collapseWhitespace: false
-        }
+        },
+        // chunks:['vendor']
       };
       if (pathname in Entrys) {
-        conf.chunks = ['vendors', pathname];
+        conf.chunks = ['vendor', pathname];
         conf.hash = false;
       }
       
