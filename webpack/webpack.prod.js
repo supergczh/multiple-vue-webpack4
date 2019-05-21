@@ -60,11 +60,6 @@ const pro = merge(common, {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin(['dist/'], {
-    //   root: path.resolve(__dirname, '../'),
-    //   verbose: true,
-    //   dry: false
-    // }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash].css',
       chunkFilename: 'css/[id].[contenthash].css',

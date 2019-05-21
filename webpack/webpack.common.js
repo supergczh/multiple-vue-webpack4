@@ -12,7 +12,6 @@ function getEntry(globPath) {
     pathname;
 
   glob.sync(globPath).forEach(function (entry) {
-    // basename = path.basename(entry, path.extname(entry));
     pathname = entry.split('/').splice(-3, 2).join('/'); // 正确输出 js 和 html 的路径
     Entrys[pathname] = entry;
   });
@@ -23,7 +22,7 @@ function getEntry(globPath) {
 var Entrys = getEntry('./src/**/main.js'); // 获得入口 js 文件
 var pages = getEntry('./src/**/*.html');// 获得入口 html文件
 var chunks = Object.keys(Entrys);
-// console.log(pages);
+
 
 
 const pathsToClean = [
@@ -42,12 +41,7 @@ const Output=process.env.NODE_ENV=='production'?{
 }
 
 module.exports ={
-  // entry: "./src/index.js",
-  // entry: {
-  //   // './src/index.js',
-  //   // app: ["@babel/polyfill", './src/index.js'],
-  //   app: path.resolve(__dirname, '..', './src/pages/main.js')
-  // },
+ 
   entry:Entrys,
   output: Output,
   resolve: {
@@ -110,7 +104,6 @@ module.exports ={
         conf.chunks = ['vendors', pathname];
         conf.hash = false;
       }
-      console.log(conf);
       
       // 需要生成几个 html 文件，就配置几个 HtmlWebpackPlugin 对象
       module.exports.plugins.push(new HtmlWebpackPlugin(conf));
