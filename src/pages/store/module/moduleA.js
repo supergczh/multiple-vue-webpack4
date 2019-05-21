@@ -8,12 +8,6 @@ const moduleA =  {
     },
   },
   mutations: {
-    // createEl(state, el) {
-    //   state.el = el;
-    // },
-    // addList(state, data) {
-    //   state.indexData.list.push(...data);
-    // },
     add(state,data){
       state.indexData.count+=1;
     } 
