@@ -57,7 +57,7 @@ const dev = merge(common, {
     // quiet: false
   },
   plugins: [
-    new WriteFileWebpackPlugin(),
+    // new WriteFileWebpackPlugin(),
   ]
 })
 module.exports=dev
