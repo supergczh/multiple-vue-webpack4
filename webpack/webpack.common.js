@@ -76,19 +76,10 @@ module.exports ={
     ]
   },
   plugins: [
-    
-    // new HtmlWebpackPlugin({
-    //   title: 'vue',
-    //   filename: 'index.html',
-    //   template: 'src/pages/index.html',
-    //   chunks: ["app"],
-    //   // favicon:'public/favicon.ico',//网页icon
-    // }),
     new VueLoaderPlugin(),
     new WebpackBar()
   ]
 }
-// if(process.env.NODE_ENV=='production'){
     for (var pathname in pages) {
       // 配置生成的 html 文件，定义路径等
       var conf = {
@@ -108,5 +99,4 @@ module.exports ={
       // 需要生成几个 html 文件，就配置几个 HtmlWebpackPlugin 对象
       module.exports.plugins.push(new HtmlWebpackPlugin(conf));
     }
-// }
 
