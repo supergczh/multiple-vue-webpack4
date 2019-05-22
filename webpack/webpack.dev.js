@@ -6,7 +6,7 @@ var webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const WriteFileWebpackPlugin = require('write-file-webpack-plugin')
+const WriteFileWebpackPlugin = require('write-file-webpack-plugin')
 
 
 let pathsToClean = [
@@ -57,7 +57,7 @@ const dev = merge(common, {
     // quiet: false
   },
   plugins: [
-    // new WriteFileWebpackPlugin(),
+    new WriteFileWebpackPlugin(),
   ]
 })
 module.exports=dev
