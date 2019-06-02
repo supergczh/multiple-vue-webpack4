@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 var glob = require('glob')
 
 // 根据项目具体需求，输出正确的 js 和 html 路径
@@ -27,24 +28,25 @@ var chunks = Object.keys(Entrys);
 const pathsToClean = [
   'dist'
 ]
+console.log(Entrys);
 
 const Output=process.env.NODE_ENV=='production'?{
   path: path.resolve(__dirname, '..', 'dist'),
   filename:'js/[name]-[chunkhash:8].chunk.js',
   chunkFilename: "js/[name].[chunkhash:8].chunk.js",
-  publicPath: '../',
+  publicPath: '/',
 }:{
   path: path.resolve(__dirname, '..', 'dist'),
   filename:'js/[name].bundle.js',
-  publicPath: './'
+  publicPath: '/'
 }
 
-module.exports ={
+const webpackConfig ={
  
   entry:Entrys,
   output: Output,
   resolve: {
-    extensions: ['*', '.js', '.json', '.vue'],
+    extensions: ['*', '.js', '.json', '.vue','.less'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, '../src'),
@@ -56,7 +58,10 @@ module.exports ={
         // .js 用babel解析
         test: /\.js?$/,
         exclude: /node_modules/, // 排除不处理的目录
-        include: path.resolve(__dirname, "../src"),
+        include: [
+          path.resolve(__dirname, "../src"),
+
+        ],
         use: ["babel-loader"]
       },
       {
@@ -76,7 +81,7 @@ module.exports ={
   },
   plugins: [
     new VueLoaderPlugin(),
-    new WebpackBar()
+    new WebpackBar(),
   ]
 }
     for (var pathname in pages) {
@@ -97,6 +102,9 @@ module.exports ={
       }
       
       // 需要生成几个 html 文件，就配置几个 HtmlWebpackPlugin 对象
-      module.exports.plugins.push(new HtmlWebpackPlugin(conf));
+      webpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
     }
-
+   
+   
+   
+    module.exports=webpackConfig

@@ -12,6 +12,7 @@ const WriteFileWebpackPlugin = require('write-file-webpack-plugin')
 let pathsToClean = [
   'dist'
 ]
+
 const dev = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',

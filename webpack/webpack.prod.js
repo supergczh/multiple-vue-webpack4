@@ -9,7 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;//一个打包模块可视化工具
-
+const CopyPlugin = require('copy-webpack-plugin');
 const pro = merge(common, {
   mode: 'production',
   module: {
@@ -20,7 +20,7 @@ const pro = merge(common, {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
+              publicPath: '/'
             },
           },
           'css-loader',
@@ -33,7 +33,7 @@ const pro = merge(common, {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
+              publicPath: '/'
             },
           }, // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
@@ -49,7 +49,7 @@ const pro = merge(common, {
             options: {
               // you can specify a publicPath here
               // by default it use publicPath in webpackOptions.output
-              publicPath: '../'
+              publicPath: '/'
             },
           }, // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS
@@ -65,6 +65,9 @@ const pro = merge(common, {
       chunkFilename: 'css/[id].[contenthash].css',
     }),
     new CleanWebpackPlugin(),
+    new CopyPlugin([
+      { from: './src/MP_verify_zAQusPCLd0GlzwA6.txt', to: './' },
+    ]),
   ],
   performance: {
     hints: false,
@@ -93,10 +96,10 @@ const pro = merge(common, {
        new UglifyJsPlugin({
          uglifyOptions: {
              cache: true,
+              // 在UglifyJs删除没有用到的代码时不输出警告
              parallel: true,
              sourceMap: false,
              compress: {
-                 // 在UglifyJs删除没有用到的代码时不输出警告
                  warnings: false,
                  // 删除所有的 `console` 语句，可以兼容ie浏览器
                  drop_console: true,
@@ -114,9 +117,13 @@ const pro = merge(common, {
          }
      }),
        new OptimizeCSSAssetsPlugin({}),
+      
       //  new BundleAnalyzerPlugin()
      ]
    },
+   stats: {
+       warningsFilter: (warning) => /Conflicting order between/gm.test(warning)
+    },
    mode: 'production'
 })
 
